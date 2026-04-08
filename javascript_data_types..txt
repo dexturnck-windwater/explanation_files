@@ -1,0 +1,98 @@
+JAVASCRIPT DATA TYPES
+
+Data types are classifications that tell us what kind of data we are using in programming.
+
+In JavaScript, there are 8 fundamental data types:
+
+
+----------------------------------------
+PRIMITIVE DATA TYPES
+----------------------------------------
+
+1. NUMBER
+Any numeric value, including decimals.
+
+Examples:
+4
+8
+1516
+23.42
+
+
+2. BIGINT
+Very large or very small integers.
+Ends with "n".
+
+Example:
+1234567890123456n
+
+
+3. STRING
+Text (characters, numbers, symbols, spaces).
+Written using single (' ') or double (" ") quotes.
+Single quotes are commonly preferred.
+
+Examples:
+'Hello'
+"JavaScript"
+
+
+4. BOOLEAN
+Only two values:
+true or false
+
+Used for yes/no or on/off logic.
+
+
+5. NULL
+Represents an intentional absence of a value.
+
+Example:
+null
+
+
+6. UNDEFINED
+Means a value does not exist or has not been assigned.
+
+Example:
+undefined
+
+
+7. SYMBOL
+A unique and immutable identifier (advanced use).
+Not commonly used for beginners.
+
+
+----------------------------------------
+NON-PRIMITIVE DATA TYPE
+----------------------------------------
+
+8. OBJECT
+A collection of related data.
+
+Example:
+let person = {
+  name: "Johnson",
+  age: 12
+}
+
+
+----------------------------------------
+IMPORTANT NOTES
+----------------------------------------
+
+- The first 7 types are called PRIMITIVE DATA TYPES.
+- Objects are more complex and used to store multiple values.
+- JavaScript uses these data types to handle different kinds of information.
+- Even though there are only 8 types, they allow us to build very complex programs.
+
+
+----------------------------------------
+SUMMARY
+----------------------------------------
+
+Primitive:
+Number, BigInt, String, Boolean, Null, Undefined, Symbol
+
+Non-Primitive:
+Object
