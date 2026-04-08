@@ -1,0 +1,79 @@
+
+1. What are Props?
+
+Props (short for properties) are used in React to pass data from one component to another. Props go from parent to child. Props help make components reusable. Props are read-only, which means they cannot be changed inside the child component.
+
+2. Simple Example
+
+Parent Component:
+
+<User name="Johnson" />
+
+Child Component:
+
+function User(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+Output:
+Hello, Johnson
+
+3. Why Use Props?
+
+Props allow you to reuse the same component with different data. They help keep your code simple and organized. They also help separate logic and display.
+
+4. Multiple Props Example
+<User name="Johnson" age={15} />
+function User(props) {
+  return (
+    <div>
+      <p>Name: {props.name}</p>
+      <p>Age: {props.age}</p>
+    </div>
+  );
+}
+5. Props with Destructuring (Optional Advanced)
+function User({ name, age }) {
+  return <p>{name} is {age} years old</p>;
+}
+
+Exercises (10 Tasks)
+Create a component that receives a name prop and displays: Hello, {name}
+Create a component that receives an age prop and displays it.
+Pass two props (name and age) and display both.
+Create a component that shows a favorite food using props.
+Make a Profile component that receives name, age, and hobby.
+Use the same component 3 times with different props.
+Pass a number prop and display double the value. Example:
+<Number value={5} />
+
+Output: 10
+
+Pass a boolean prop:
+<Status isStudent={true} />
+
+Display:
+Student if true, Not Student if false.
+
+Create a Button component that receives text as a prop:
+<Button label="Click Me" />
+Create a Card component with title and description props.
+Bonus Challenge (Optional)
+
+Create a list of users:
+
+const users = ["Alex", "Taylor", "Jordan"];
+
+Display them using a component and props.
+
+Try passing props into nested components (a component inside another component).
+
+Reflection Questions
+
+What is the difference between props and variables?
+Why are props important in React?
+Can props be changed inside a component?
+
+Summary
+
+Props are used to pass data between components. Props make components reusable. Props are read-only.
