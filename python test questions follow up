@@ -1,0 +1,112 @@
+# =========================
+# Question 7 — Car Dealership System
+# =========================
+
+"""
+A car dealership stores car information
+inside a list of dictionaries.
+
+Tasks:
+1. Use a loop to check every car inside cars_list
+
+2. If the car type and country match
+   the user's input:
+   - print the brand
+   - print the color
+   - print the price
+   - print the stock
+   - print the amount sold
+"""
+
+cars_list = [
+    {
+        "id": 1,
+        "brand": "Toyota",
+        "color": "Red",
+        "price": 30000,
+        "type": "oil",
+        "country": "Japan",
+        "stock": 5,
+        "sold": 2
+    },
+    {
+        "id": 2,
+        "brand": "Tesla",
+        "color": "Black",
+        "price": 50000,
+        "type": "electric",
+        "country": "USA",
+        "stock": 3,
+        "sold": 1
+    },
+    {
+        "id": 3,
+        "brand": "Hyundai",
+        "color": "White",
+        "price": 28000,
+        "type": "oil",
+        "country": "Korea",
+        "stock": 7,
+        "sold": 4
+    }
+]
+
+user_type = input("Enter car type: ")
+user_country = input("Enter country: ")
+
+# write your code here
+
+
+"""
+Example 1
+
+Input:
+oil
+Japan
+
+Output:
+Brand: Toyota
+Color: Red
+Price: 30000
+Stock: 5
+Sold: 2
+"""
+
+
+"""
+Example 2
+
+Input:
+electric
+USA
+
+Output:
+Brand: Tesla
+Color: Black
+Price: 50000
+Stock: 3
+Sold: 1
+"""
+
+
+"""
+Theory Questions
+
+1. Why is a list used instead of one dictionary only?
+
+2. What is the difference between:
+
+cars_list[0]
+
+and
+
+cars_list[0]["brand"]
+
+3. Why is a loop useful in this program?
+
+4. What will happen if this code is used?
+
+print(cars_list["brand"])
+
+Explain your answer.
+"""
