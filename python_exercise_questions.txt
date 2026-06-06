@@ -1,0 +1,33 @@
+1. Write a program that prints the word "Python" 10 times.
+
+2. Create a turtle and use a loop to move it forward 50 pixels, 8 times.
+
+3. Ask the user for a number. Print all numbers from 1 up to that number.
+
+4. Print all even numbers from 2 to 20.
+
+5. Print the multiplication table of 5 from:
+   5 × 1
+   up to
+   5 × 10
+
+6. Create an empty list called fruits.
+   Ask the user to enter 5 fruit names and store them in the list.
+
+7. Given the list below:
+
+   animals = ["cat", "dog", "bird", "fish"]
+
+   Use a loop to print every animal in the list.
+
+8. Given the list below:
+
+   scores = [80, 90, 75, 100, 85]
+
+   Use a loop to calculate and print the total score.
+
+9. Create a turtle and use a loop to draw a square.
+
+10. Ask the user to enter 10 numbers.
+    Store them in a list.
+    Then use a loop to print only the numbers greater than 50.
