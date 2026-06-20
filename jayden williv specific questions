@@ -1,0 +1,174 @@
+=========================
+SHOE SHOP QUESTIONS
+=========================
+
+Question 1 — Shoe Brand File
+
+Create a text file named brands.txt.
+
+Manually write at least 5 shoe brands inside the file.
+
+Example:
+
+Adidas
+Nike
+Puma
+New Balance
+Asics
+
+Write a Python program to open the file and print all shoe brands.
+
+
+--------------------------------------------------
+
+
+Question 2 — Shoe Inventory File
+
+Create a text file named shoes.txt.
+
+Each line contains:
+
+brand,price,stock
+
+Example:
+
+Adidas,2000,5
+Nike,3500,2
+Puma,1800,8
+
+Write a program to read the file and display:
+
+Shoe Name: Adidas
+Price: 2000
+Stock: 5
+
+
+--------------------------------------------------
+
+
+Question 3 — Expensive Shoes
+
+Read shoes.txt.
+
+Print only the shoes whose price is greater than 3000.
+
+Example:
+
+Nike
+Price: 3500
+
+
+--------------------------------------------------
+
+
+Question 4 — Low Stock Warning
+
+Read shoes.txt.
+
+If a shoe has a stock lower than 3, print:
+
+Low Stock: Nike
+
+Use loops and if statements.
+
+
+--------------------------------------------------
+
+
+Question 5 — Shoe Display System
+
+A shoe shop wants to display its products on the screen.
+
+Each shoe is stored inside a dictionary.
+
+Complete the program below.
+
+import turtle
+
+screen = turtle.Screen()
+
+shoe_list = [
+    {
+        "name": "Adidas",
+        "price": 2000,
+        "stock": 5,
+        "position_list": [
+            (-100, 50),
+            (-100, 100),
+            (-100, 0)
+        ],
+        "shoe": turtle.Turtle()
+    },
+    {
+        "name": "Nike",
+        "price": 3500,
+        "stock": 2,
+        "position_list": [
+            (100, 50),
+            (100, 100),
+            (100, 0)
+        ],
+        "shoe": turtle.Turtle()
+    }
+]
+
+for shoe_data in shoe_list:
+
+    shoe_data["shoe"].shape("circle")
+
+    # write your code here
+
+
+Tasks:
+
+1. Create additional turtles to display:
+   - shoe name
+   - shoe price
+   - shoe stock
+
+2. Use the positions inside position_list:
+   - first position for the shoe
+   - second position for the name
+   - third position for the price and stock
+
+3. Display:
+   - shoe name
+   - price
+   - stock
+
+
+--------------------------------------------------
+
+
+Question 6 — Shoe Stock Update
+
+Continue from Question 5.
+
+Use Turtle's input dialog to ask the user which shoe was sold.
+
+Example:
+
+screen.textinput("Shoe Shop", "Enter shoe name:")
+
+If the shoe exists:
+
+- decrease the stock by 1
+- update the stock display on the screen
+
+Tasks:
+
+1. Use screen.textinput().
+2. Loop through shoe_list.
+3. Compare the user input with the shoe name.
+4. Decrease the stock by 1.
+5. Update the stock display.
+
+Theory Questions:
+
+1. What is the difference between:
+   - input()
+   - screen.textinput()
+
+2. Why is screen.textinput() useful in turtle programs?
+
+3. Why must the stock display be updated after changing the stock?
