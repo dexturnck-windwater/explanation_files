@@ -1,0 +1,167 @@
+=========================
+E-SHOP QUESTIONS
+=========================
+
+Question 1 — Product File
+
+Create a text file named products.txt.
+
+Manually write at least 5 product names.
+
+Example:
+
+Laptop
+Mouse
+Keyboard
+Monitor
+Headphone
+
+Write a program to read the file and print all product names.
+
+
+--------------------------------------------------
+
+
+Question 2 — Product Information File
+
+Create a text file named inventory.txt.
+
+Each line contains:
+
+name,price,stock
+
+Example:
+
+Laptop,800,5
+Mouse,20,15
+Keyboard,50,10
+
+Read the file and display:
+
+Product: Laptop
+Price: 800
+Stock: 5
+
+
+--------------------------------------------------
+
+
+Question 3 — Expensive Products
+
+Read inventory.txt.
+
+Print only products with a price greater than 100.
+
+Example:
+
+Laptop
+Price: 800
+
+
+--------------------------------------------------
+
+
+Question 4 — Low Stock Products
+
+Read inventory.txt.
+
+If a product has a stock less than 5, print:
+
+Low Stock: Laptop
+
+Use loops and if statements.
+
+
+--------------------------------------------------
+
+
+Question 5 — Product Display System
+
+import turtle
+
+screen = turtle.Screen()
+
+product_list = [
+    {
+        "name": "Laptop",
+        "price": 800,
+        "stock": 5,
+        "position_list": [
+            (-100, 50),
+            (-100, 100),
+            (-100, 0)
+        ],
+        "product": turtle.Turtle()
+    },
+    {
+        "name": "Mouse",
+        "price": 20,
+        "stock": 15,
+        "position_list": [
+            (100, 50),
+            (100, 100),
+            (100, 0)
+        ],
+        "product": turtle.Turtle()
+    }
+]
+
+for product_data in product_list:
+
+    product_data["product"].shape("square")
+
+    # write your code here
+
+
+Tasks:
+
+1. Create additional turtles to display:
+   - product name
+   - price
+   - stock
+
+2. Use the positions inside position_list.
+
+3. Display:
+   - product name
+   - price
+   - stock
+
+
+--------------------------------------------------
+
+
+Question 6 — Purchase System
+
+Continue from Question 5.
+
+Use:
+
+screen.textinput()
+
+to ask the user which product was purchased.
+
+If the product exists:
+
+- decrease the stock by 1
+- update the stock display
+
+Example:
+
+Enter product name:
+Laptop
+
+Result:
+
+Laptop stock: 4
+
+
+Theory Questions:
+
+1. What is the difference between:
+   - input()
+   - screen.textinput()
+
+2. Why must the stock value be updated after a purchase?
+
+3. Why is a list of dictionaries useful for storing products?
