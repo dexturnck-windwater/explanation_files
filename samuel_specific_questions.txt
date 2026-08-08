@@ -1,0 +1,156 @@
+=========================
+STEAM GAME SHOP QUESTIONS
+=========================
+
+Question 1 — Game List File
+
+Create a text file named games.txt.
+
+Manually write at least 5 game names.
+
+Example:
+
+Minecraft
+Stardew Valley
+Terraria
+Portal 2
+Hades
+
+Write a Python program to read the file and print all game names.
+
+
+--------------------------------------------------
+
+
+Question 2 — Game Information File
+
+Create a text file named game_info.txt.
+
+Each line contains:
+
+name,price,genre
+
+Example:
+
+Minecraft,30,sandbox
+Hades,25,action
+Stardew Valley,15,simulation
+
+Read the file and display:
+
+Game: Minecraft
+Price: 30
+Genre: sandbox
+
+
+--------------------------------------------------
+
+
+Question 3 — Find Games by Genre
+
+Read game_info.txt.
+
+Ask the user to enter a genre.
+
+Print only the games that belong to that genre.
+
+Example:
+
+Enter genre: action
+
+Hades
+Price: 25
+
+
+--------------------------------------------------
+
+
+Question 4 — Game Discount
+
+Read game_info.txt.
+
+Ask the user to enter a game name.
+
+If the game exists, give the game a 20% discount.
+
+Display:
+
+Game: Hades
+Original Price: 25
+Discounted Price: 20
+
+
+--------------------------------------------------
+
+
+Question 5 — Steam Game Display
+
+Create a Turtle program that displays games on the screen.
+
+Each game should be stored inside a dictionary.
+
+Example:
+
+game_list = [
+    {
+        "name": "Minecraft",
+        "price": 30,
+        "genre": "sandbox",
+        "game": turtle.Turtle()
+    },
+    {
+        "name": "Hades",
+        "price": 25,
+        "genre": "action",
+        "game": turtle.Turtle()
+    }
+]
+
+Use a loop to display each game's:
+
+- name
+- price
+- genre
+
+on the Turtle screen.
+
+
+--------------------------------------------------
+
+
+Question 6 — Buy a Game
+
+Continue from Question 5.
+
+Use:
+
+screen.textinput()
+
+to ask the user which game they want to buy.
+
+If the game exists:
+
+1. Display the game name.
+2. Display its price.
+3. Ask the user to confirm the purchase.
+4. If the user chooses "yes", add the game name to an owned_games list.
+
+Example:
+
+Enter game name: Hades
+
+Game: Hades
+Price: 25
+
+Buy this game? yes
+
+Game added to your library.
+
+Theory Questions:
+
+1. Why is a list useful for storing owned games?
+
+2. Why should the game information be stored in a dictionary?
+
+3. What is the difference between the game's price
+   and the price after a discount?
