@@ -1,0 +1,163 @@
+=========================
+FITNESS GYM QUESTIONS
+=========================
+
+Question 1 — Member List File
+
+Create a text file named members.txt.
+
+Manually write at least 5 member names.
+
+Example:
+
+Alex
+Brian
+Chris
+David
+Emma
+
+Write a Python program to read the file and print all member names.
+
+
+--------------------------------------------------
+
+
+Question 2 — Member Information File
+
+Create a text file named member_info.txt.
+
+Each line contains:
+
+name,age,plan
+
+Example:
+
+Alex,20,basic
+Brian,25,premium
+Chris,19,basic
+
+Read the file and display:
+
+Name: Alex
+Age: 20
+Plan: basic
+
+
+--------------------------------------------------
+
+
+Question 3 — Find Premium Members
+
+Read member_info.txt.
+
+Ask the user to enter a membership plan.
+
+Print only members who have that plan.
+
+Example:
+
+Enter plan: premium
+
+Brian
+Age: 25
+
+
+--------------------------------------------------
+
+
+Question 4 — Membership Fee
+
+Read member_info.txt.
+
+The gym has these membership prices:
+
+basic = 20
+premium = 40
+
+Ask the user for a member's name.
+
+Find the member and display their membership fee.
+
+Example:
+
+Enter member name: Brian
+
+Name: Brian
+Plan: premium
+Fee: 40
+
+
+--------------------------------------------------
+
+
+Question 5 — Gym Member Display
+
+Create a Turtle program that displays gym members.
+
+Each member should be stored inside a dictionary.
+
+Example:
+
+member_list = [
+    {
+        "name": "Alex",
+        "plan": "basic",
+        "fee": 20,
+        "member": turtle.Turtle()
+    },
+    {
+        "name": "Brian",
+        "plan": "premium",
+        "fee": 40,
+        "member": turtle.Turtle()
+    }
+]
+
+Use a loop to display:
+
+- member name
+- membership plan
+- membership fee
+
+on the Turtle screen.
+
+
+--------------------------------------------------
+
+
+Question 6 — Gym Check-In
+
+Continue from Question 5.
+
+Create an empty list:
+
+checked_in = []
+
+Use:
+
+screen.textinput()
+
+to ask the user which member is entering the gym.
+
+If the member exists:
+
+1. Add their name to checked_in.
+2. Display:
+
+Member checked in:
+Alex
+
+If the member does not exist:
+
+Display:
+
+Member not found.
+
+Theory Questions:
+
+1. Why is a list useful for storing checked-in members?
+
+2. Why is a dictionary useful for storing member information?
+
+3. What is the difference between the member_list
+   and checked_in lists?
