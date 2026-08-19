@@ -1,0 +1,542 @@
+```text
+React — Components & Data Flow
+
+Brief Concepts
+
+
+1. Separate Component Files
+
+React components can be placed in separate files instead of putting
+everything in one file.
+
+For example:
+
+App.jsx
+Header.jsx
+ProductCard.jsx
+ProductList.jsx
+
+A component can be exported from one file and imported into another.
+
+This helps keep a React project organized and makes components easier
+to reuse.
+
+
+2. Props
+
+Props are information passed from a parent component to a child
+component.
+
+In this example, App is the PARENT and Greeting is the CHILD.
+
+The components are in separate files:
+
+App.jsx
+Greeting.jsx
+
+
+App.jsx — Parent
+
+function App() {
+  return <Greeting name="Alex" />;
+}
+
+App passes "Alex" to Greeting as a prop.
+
+The prop is called name.
+
+
+Greeting.jsx — Child
+
+function Greeting(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+The child receives the information through props.
+
+The data flow is:
+
+App.jsx (Parent)
+    |
+    | name="Alex"
+    ↓
+Greeting.jsx (Child)
+
+
+Props are read-only. The child should not directly change the props
+it receives.
+
+
+3. props.children
+
+props.children contains the content placed between a component's
+opening and closing tags.
+
+In this example, App is the PARENT and Card is the CHILD.
+
+The components are in separate files:
+
+App.jsx
+Card.jsx
+
+
+App.jsx — Parent
+
+function App() {
+  return (
+    <Card>
+      <h2>My Product</h2>
+      <p>Price: $100</p>
+    </Card>
+  );
+}
+
+App places the content between <Card> and </Card>.
+
+
+Card.jsx — Child
+
+function Card(props) {
+  return (
+    <div className="card">
+      {props.children}
+    </div>
+  );
+}
+
+The content inside <Card> becomes props.children.
+
+So:
+
+<Card>
+  <h2>My Product</h2>
+</Card>
+
+means that the <h2> element becomes:
+
+props.children
+
+
+The component relationship is:
+
+App.jsx (Parent)
+    |
+    | sends content
+    ↓
+Card.jsx (Child)
+    |
+    | displays props.children
+    ↓
+<h2>My Product</h2>
+
+
+This makes the Card component reusable because different content
+can be placed inside it.
+
+
+4. Callback Props
+
+A callback prop is a function that a parent component passes to a
+child component.
+
+The child can call this function when something happens, such as
+when a button is clicked.
+
+In this example, App is the PARENT and Button is the CHILD.
+
+The components are in separate files:
+
+App.jsx
+Button.jsx
+
+
+App.jsx — Parent
+
+function App() {
+  function handleClick() {
+    console.log("The button was clicked!");
+  }
+
+  return <Button onButtonClick={handleClick} />;
+}
+
+App passes the handleClick function to Button as a prop.
+
+The prop is called onButtonClick.
+
+
+Button.jsx — Child
+
+function Button(props) {
+  return (
+    <button onClick={props.onButtonClick}>
+      Click
+    </button>
+  );
+}
+
+Button receives the function through props.
+
+When the button is clicked, it calls:
+
+props.onButtonClick()
+
+This causes handleClick() in the parent, App, to run.
+
+
+The data flow is:
+
+App.jsx (Parent)
+    |
+    | passes function as a prop
+    ↓
+Button.jsx (Child)
+    |
+    | calls the function
+    ↓
+App.jsx (Parent)
+
+
+The important idea is that the child does not directly change the
+parent's data.
+
+Instead, the parent gives the child a function that the child can
+call.
+
+This is called a callback prop.
+
+
+5. Lifting State Up
+
+When multiple components need the same state, the state can be
+moved to their nearest common parent.
+
+The parent stores the state and passes the necessary data or
+functions to the child components.
+
+For example, there are three separate files:
+
+App.jsx
+NameInput.jsx
+NameDisplay.jsx
+
+
+App.jsx — Parent
+
+function App() {
+  const [name, setName] = useState("");
+
+  return (
+    <>
+      <NameInput name={name} setName={setName} />
+      <NameDisplay name={name} />
+    </>
+  );
+}
+
+
+NameInput.jsx — Child
+
+function NameInput(props) {
+  return (
+    <input
+      value={props.name}
+      onChange={e => props.setName(e.target.value)}
+    />
+  );
+}
+
+
+NameDisplay.jsx — Child
+
+function NameDisplay(props) {
+  return <h2>Hello, {props.name}</h2>;
+}
+
+
+App stores the state because both NameInput and NameDisplay need
+to use the same data.
+
+The state is moved to their common parent, App.
+
+This is called lifting state up.
+
+
+6. Conditional Rendering
+
+Conditional rendering means displaying different UI depending on
+a condition.
+
+Example:
+
+function LoginMessage({ isLoggedIn }) {
+  if (isLoggedIn) {
+    return <h2>Welcome!</h2>;
+  }
+
+  return <h2>Please log in.</h2>;
+}
+
+If isLoggedIn is true, React displays:
+
+Welcome!
+
+Otherwise, React displays:
+
+Please log in.
+
+
+Another common example:
+
+{isLoggedIn ? <Profile /> : <Login />}
+
+A condition can decide which component should appear.
+
+
+7. Lists and Keys
+
+React can display multiple components from an array by using
+JavaScript's .map().
+
+For example, suppose the project has these separate files:
+
+App.jsx
+SongList.jsx
+SongCard.jsx
+
+
+App.jsx — Parent
+
+const songs = [
+  { id: 1, title: "Song A" },
+  { id: 2, title: "Song B" },
+  { id: 3, title: "Song C" }
+];
+
+function App() {
+  return <SongList songs={songs} />;
+}
+
+App passes the song array to SongList using props.
+
+
+SongList.jsx — Child
+
+function SongList({ songs }) {
+  return (
+    <div>
+      {songs.map(song => (
+        <SongCard
+          key={song.id}
+          title={song.title}
+        />
+      ))}
+    </div>
+  );
+}
+
+SongList uses .map() to create one SongCard for every song.
+
+
+SongCard.jsx — Child
+
+function SongCard({ title }) {
+  return <h2>{title}</h2>;
+}
+
+
+The .map() creates one SongCard for every item in the array.
+
+The key helps React identify each item in the list.
+
+When possible, use a unique ID from the data as the key instead of
+using the array index.
+
+
+==================================================
+Exercises
+==================================================
+
+Project: Project SEKAI / Vocaloid Song Library
+
+Instructions:
+
+Create the React components in separate files.
+
+You may choose the songs and fill in the information yourself.
+
+Each song should contain:
+
+- id
+- song
+- artist
+- vocals
+- unit
+- difficulty
+- vocaloid
+
+Note: Vocals may also contain a Vocaloid. This is okay.
+
+
+1. Create a Song List
+
+   Create a song list in App.jsx containing at least 5 songs.
+
+   Each song should have:
+
+   - id
+   - song
+   - artist
+   - vocals
+   - unit
+   - difficulty
+   - vocaloid
+
+   You may choose the songs yourself.
+
+
+2. Create SongList.jsx
+
+   Create a separate SongList.jsx component.
+
+   App.jsx should pass the song list to SongList using props.
+
+   SongList should receive the songs and display them.
+
+
+3. Create SongCard.jsx
+
+   Create a separate SongCard.jsx component.
+
+   SongList should use .map() to create a SongCard for every song.
+
+   Pass the song information from SongList to SongCard using props.
+
+   SongCard should display:
+
+   - Song
+   - Artist
+   - Vocals
+   - Unit
+   - Difficulty
+   - Vocaloid
+
+
+4. Add More Songs
+
+   Continue using the same component files:
+
+   App.jsx
+   SongList.jsx
+   SongCard.jsx
+
+   Add at least 5 more songs to the existing song array.
+
+   You should now have at least 10 songs in total.
+
+   Do NOT create a new component for each song.
+
+   Use the same SongCard component for every song.
+
+   Make sure every song has a unique id.
+
+   Use the song's id as the key when using .map().
+
+
+5. Create Card.jsx
+
+   Create a new reusable Card.jsx component.
+
+   Use props.children so that other components can place their
+   content inside the Card.
+
+   Change SongCard so that its song information is displayed
+   inside the reusable Card component.
+
+
+6. Add Song Selection
+
+   Add a "Select" button to every SongCard.
+
+   Create a callback prop that allows SongCard to tell the parent
+   which song was selected.
+
+   Do not store the selected song inside SongCard.
+
+
+7. Store the Selected Song
+
+   Store the selected song in App.jsx using useState.
+
+   When the user clicks a SongCard's Select button, update the
+   selected song.
+
+   Create a SongDetails.jsx component.
+
+   Pass the selected song from App.jsx to SongDetails using props.
+
+
+8. Use Conditional Rendering
+
+   Use conditional rendering in SongDetails.
+
+   If no song has been selected, display:
+
+   "Please select a song."
+
+   If a song has been selected, display its information.
+
+
+9. Add Difficulty Filtering
+
+   Add a difficulty filter.
+
+   The user should be able to select a difficulty such as:
+
+   All
+   Easy
+   Normal
+   Hard
+   Expert
+   Master
+
+   Only display songs that match the selected difficulty.
+
+   Keep the main song data in App.jsx.
+
+   Use the necessary state, props, and components to control
+   the filter.
+
+
+10. Add Unit Filtering
+
+    Add a unit filter and finish the Song Library.
+
+    The user should be able to select a unit.
+
+    Only display songs belonging to the selected unit.
+
+    The final project should include:
+
+    - At least 10 songs
+    - Separate component files
+    - Props
+    - props.children
+    - Callback props
+    - Lifting state up
+    - Conditional rendering
+    - Lists and keys
+    - Song selection
+    - Difficulty filtering
+    - Unit filtering
+
+    Suggested component structure:
+
+    App.jsx
+    ├── SongList.jsx
+    │   └── SongCard.jsx
+    │       └── Card.jsx
+    └── SongDetails.jsx
+
+    You may add more components if you think they are useful.
+```
