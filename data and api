@@ -1,0 +1,375 @@
+18. fetch
+
+fetch() is used in JavaScript and React to communicate with an API. An API allows our application to request data from another server. For example, a website might request a list of products from an API instead of keeping all products directly inside the React code.
+
+A simple example is:
+
+fetch("https://example.com/products")
+
+However, fetch() does not immediately give us the final data. It starts a request, and the response comes back later. This is why fetch() is commonly used with asynchronous JavaScript.
+
+A common way to use it is with .then():
+
+fetch("https://example.com/products")
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+  });
+
+The first .then() receives the response from the server. response.json() converts the response into JavaScript data, usually an array or object. The second .then() receives that converted data.
+
+async and await
+
+async and await provide another way to work with asynchronous code. They often make API code easier to read.
+
+An async function is a function that can use await.
+
+async function getProducts() {
+  const response = await fetch("https://example.com/products");
+  const data = await response.json();
+
+  console.log(data);
+}
+
+Here, await fetch(...) waits for the response from the server before continuing.
+
+Then:
+
+const data = await response.json();
+
+waits for the response to be converted into JavaScript data.
+
+It is important to understand that await does not mean that the entire website freezes while waiting. It means that this asynchronous function waits for that particular operation to finish before continuing.
+
+In React, you will often see this pattern inside a function:
+
+async function getProducts() {
+  const response = await fetch("https://example.com/products");
+  const data = await response.json();
+
+  setProducts(data);
+}
+
+Students do not need to learn every detail of asynchronous programming immediately. At this stage, the main idea is:
+
+fetch → wait for response → convert response to JSON → use the data.
+
+19. Loading, Error, and Empty States
+
+When getting data from an API, the application needs to handle different situations.
+
+For example, while waiting for the API:
+
+Loading...
+
+If something goes wrong:
+
+Something went wrong.
+
+If the API works but there is no data:
+
+No products found.
+
+These are called states.
+
+In React, we can use state to keep track of them:
+
+const [loading, setLoading] = useState(true);
+const [error, setError] = useState(false);
+const [products, setProducts] = useState([]);
+
+For example:
+
+if (loading) {
+  return <p>Loading...</p>;
+}
+
+if (error) {
+  return <p>Something went wrong.</p>;
+}
+
+if (products.length === 0) {
+  return <p>No products found.</p>;
+}
+
+This makes the application more realistic because an API request does not always finish immediately or successfully.
+
+20. GET
+
+GET is used when we want to get data from an API.
+
+For example:
+
+const response = await fetch("https://example.com/products");
+const data = await response.json();
+
+console.log(data);
+
+This is normally a GET request.
+
+GET can be used for things such as:
+
+Get all products
+Get all users
+Get one product
+Get comments
+Get songs
+
+For example, an API might provide:
+
+GET /products
+
+which means:
+
+"Give me the products."
+
+21. POST
+
+POST is used when we want to send new data to an API.
+
+For example, suppose we have a form for adding a product.
+
+const newProduct = {
+  name: "Keyboard",
+  price: 50
+};
+
+We can send it to the API:
+
+const response = await fetch("https://example.com/products", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(newProduct)
+});
+
+JSON.stringify() converts the JavaScript object into JSON text that can be sent to the server.
+
+The basic idea is:
+
+GET = receive data
+
+POST = create/send new data
+
+22. PUT / PATCH
+
+PUT and PATCH are used when we want to update existing data.
+
+For example, suppose a product currently looks like this:
+
+{
+  id: 1,
+  name: "Keyboard",
+  price: 50
+}
+
+We want to change the price.
+
+With PUT, we might send the updated object:
+
+const updatedProduct = {
+  name: "Keyboard",
+  price: 60
+};
+
+await fetch("https://example.com/products/1", {
+  method: "PUT",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(updatedProduct)
+});
+
+PATCH is also used for updating data, often when we only want to change part of an object.
+
+For example:
+
+await fetch("https://example.com/products/1", {
+  method: "PATCH",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    price: 60
+  })
+});
+
+For this level, students mainly need to remember:
+
+PUT/PATCH = update existing data
+
+23. DELETE
+
+DELETE is used when we want to remove data.
+
+For example:
+
+await fetch("https://example.com/products/1", {
+  method: "DELETE"
+});
+
+This tells the API to delete the product with ID 1.
+
+The basic CRUD idea is:
+
+GET     → Read
+POST    → Create
+PUT     → Update
+PATCH   → Update
+DELETE  → Delete
+
+This is an important concept because many React applications use these four operations.
+
+24. Small API Project
+
+After learning the individual API operations, the student can combine them into one small React project.
+
+A good beginner project could be a Product Manager.
+
+The application could display products such as:
+
+Products
+
+Keyboard     $50     Edit   Delete
+Mouse        $20     Edit   Delete
+Monitor      $150    Edit   Delete
+
+[ Add Product ]
+
+The project could use:
+
+GET
+
+Load the products when the page starts.
+
+POST
+
+Add a new product using a form.
+
+PUT/PATCH
+
+Edit an existing product.
+
+DELETE
+
+Remove a product.
+
+The application should also have:
+
+Loading...
+
+while the API request is happening.
+
+If the request fails:
+
+Failed to load products.
+
+If there are no products:
+
+No products available.
+
+A simplified flow would be:
+
+React starts
+     ↓
+GET products
+     ↓
+Show Loading...
+     ↓
+API responds
+     ↓
+Store products in state
+     ↓
+Display products
+
+When adding:
+
+Fill in form
+     ↓
+POST
+     ↓
+API saves product
+     ↓
+Update/display products
+
+When editing:
+
+Click Edit
+     ↓
+Change product
+     ↓
+PUT/PATCH
+     ↓
+API updates product
+     ↓
+Display updated product
+
+When deleting:
+
+Click Delete
+     ↓
+DELETE
+     ↓
+API removes product
+     ↓
+Remove/update product in React
+Simple Exercises
+
+Exercise 1 — Basic GET
+
+Use fetch() to get data from an API and display the result using console.log().
+
+Exercise 2 — GET with async/await
+
+Create an async function called getProducts(). Use await fetch() and await response.json() to get the products and print them.
+
+Exercise 3 — Display API data
+
+Create a React component that gets a list of products from an API and displays each product using .map().
+
+Exercise 4 — Loading state
+
+Add a loading state. Show "Loading..." before the API data has finished loading.
+
+Exercise 5 — Empty state
+
+If the returned product array is empty, display:
+
+No products found.
+
+Exercise 6 — Error state
+
+Add an error state. If the API request fails, display:
+
+Failed to load products.
+
+Exercise 7 — POST
+
+Create a small form with:
+
+Product Name
+Price
+[Add Product]
+
+When the button is clicked, send the new product to the API using POST.
+
+Exercise 8 — DELETE
+
+Display a Delete button beside every product. When the button is clicked, send a DELETE request for that product.
+
+Exercise 9 — Edit
+
+Add an Edit button beside each product. When clicked, allow the user to change the product name or price and send the updated information using PUT or PATCH.
+
+Exercise 10 — Small API Project
+
+Make a small React Product Manager that can:
+
+Load products with GET
+Show a loading message
+Show an error message
+Show an empty message
+Add products with POST
+Edit products with PUT/PATCH
+Delete products with DELETE
