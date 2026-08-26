@@ -1,0 +1,398 @@
+12. Controlled Inputs
+
+A controlled input is an input whose value is controlled by React state.
+
+Instead of letting the HTML input manage its own value, React stores the value in useState.
+
+import { useState } from "react";
+
+function App() {
+    const [name, setName] = useState("");
+
+    return (
+        <div>
+            <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+            />
+
+            <p>Your name: {name}</p>
+        </div>
+    );
+}
+
+The important relationship is:
+
+Input → onChange → setState → state → input value
+
+When the student types something:
+
+onChange runs.
+The new value is obtained from e.target.value.
+setName() changes the state.
+React renders the new value.
+Why use controlled inputs?
+
+They make it easy for React to:
+
+Read the current input.
+Validate the input.
+Clear the input.
+Use the input value somewhere else.
+Submit the input as part of a form.
+Simple Exercise
+
+Create a controlled input for:
+
+Username
+
+Display:
+
+Username: ______
+
+underneath the input.
+
+13. Forms
+
+React forms use controlled inputs to collect information from the user.
+
+A form can use onSubmit to handle submission.
+
+function App() {
+    const [name, setName] = useState("");
+
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        console.log(name);
+    }
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+            />
+
+            <button type="submit">
+                Submit
+            </button>
+        </form>
+    );
+}
+e.preventDefault()
+
+Normally, submitting an HTML form can cause the browser to reload the page.
+
+In React applications, we usually don't want that.
+
+e.preventDefault();
+
+stops the normal browser submission so React can handle the form.
+
+Multiple inputs
+
+A form can have several pieces of state.
+
+const [name, setName] = useState("");
+const [email, setEmail] = useState("");
+
+Then each input controls one state value.
+
+Simple Exercise
+
+Create a form with:
+
+Name
+Email
+Age
+Submit button
+
+When the form is submitted, display the entered information using console.log().
+
+14. Validation
+
+Validation means checking whether the user's input is acceptable.
+
+For example:
+
+Name cannot be empty.
+Age must be a number.
+Email cannot be empty.
+Password must be long enough.
+
+A simple validation example:
+
+function handleSubmit(e) {
+    e.preventDefault();
+
+    if (name === "") {
+        console.log("Name is required");
+        return;
+    }
+
+    console.log("Form submitted");
+}
+
+You can also store an error message in state.
+
+const [error, setError] = useState("");
+
+function handleSubmit(e) {
+    e.preventDefault();
+
+    if (name === "") {
+        setError("Name is required");
+        return;
+    }
+
+    setError("");
+}
+
+Then display it:
+
+{error && <p>{error}</p>}
+
+This combines validation with conditional rendering.
+
+Multiple validation rules
+if (name === "") {
+    setError("Name is required");
+} else if (name.length < 3) {
+    setError("Name must have at least 3 characters");
+} else {
+    setError("");
+}
+Simple Exercise
+
+Create a login form with:
+
+Username
+Password
+Login button
+
+Show an error if either field is empty.
+
+15. Add / Edit / Delete UI
+
+This is an important step because it starts making React applications feel like real applications.
+
+Suppose we have:
+
+const [items, setItems] = useState([]);
+
+The UI can allow the user to:
+
+Add item
+Edit item
+Delete item
+Add
+
+Use a new object and create a new array.
+
+setItems([
+    ...items,
+    {
+        id: Date.now(),
+        name: "Keyboard"
+    }
+]);
+
+The spread operator keeps the existing items and adds the new item.
+
+Delete
+
+filter() is commonly used.
+
+setItems(
+    items.filter(item => item.id !== id)
+);
+
+This creates a new array without the selected item.
+
+Edit
+
+Editing usually requires:
+
+Selecting an item.
+Putting its information into an input.
+Changing the input.
+Saving the new information.
+
+For example:
+
+setItems(
+    items.map(item =>
+        item.id === id
+            ? { ...item, name: newName }
+            : item
+    )
+);
+
+The item with the matching ID is replaced with an updated object.
+
+Simple Exercise
+
+Create a small Todo List.
+
+The user should be able to:
+
+Add a todo.
+Delete a todo.
+Edit a todo.
+
+Don't worry about a database yet. Keep everything in React state.
+
+16. Search and Filtering
+
+Once an application has many items, users need a way to find specific items.
+
+Search usually works by storing the search text in state.
+
+const [search, setSearch] = useState("");
+
+Then filter the data:
+
+const filteredProducts = products.filter(product =>
+    product.name
+        .toLowerCase()
+        .includes(search.toLowerCase())
+);
+
+Then display:
+
+{filteredProducts.map(product => (
+    <ProductCard
+        key={product.id}
+        product={product}
+    />
+))}
+How it works
+
+If the products are:
+
+Keyboard
+Mouse
+Monitor
+Headset
+
+and the user searches:
+
+mouse
+
+the filtered result becomes:
+
+Mouse
+Filtering by category
+
+Search isn't the only type of filtering.
+
+For example:
+
+const filteredProducts = products.filter(product =>
+    product.category === selectedCategory
+);
+
+You can also combine conditions:
+
+const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(search.toLowerCase()) &&
+    product.category === selectedCategory
+);
+Simple Exercise
+
+Create a list of games containing:
+
+name
+genre
+
+Add:
+
+A search input.
+A genre filter.
+
+The displayed list should change based on the search and selected genre.
+
+17. Reusable UI Components
+
+As applications become larger, you don't want to write the same UI code repeatedly.
+
+For example, instead of writing three different buttons:
+
+<button>Add</button>
+<button>Delete</button>
+<button>Edit</button>
+
+you could create a reusable component.
+
+function Button({ children, onClick }) {
+    return (
+        <button onClick={onClick}>
+            {children}
+        </button>
+    );
+}
+
+Then:
+
+<Button onClick={addItem}>
+    Add
+</Button>
+
+<Button onClick={deleteItem}>
+    Delete
+</Button>
+
+<Button onClick={editItem}>
+    Edit
+</Button>
+
+The component handles the common UI structure, while props control what it does.
+
+Reusable Card
+function Card({ title, children }) {
+    return (
+        <div className="card">
+            <h2>{title}</h2>
+            {children}
+        </div>
+    );
+}
+
+Usage:
+
+<Card title="Profile">
+    <p>Name: Alex</p>
+</Card>
+
+<Card title="Score">
+    <p>Score: 100</p>
+</Card>
+
+This combines props and props.children, which the student learned previously.
+
+Good reusable components
+
+A reusable component should have a clear purpose.
+
+Good examples:
+
+Button
+Card
+Modal
+Input
+ProductCard
+TodoItem
+Navbar
+
+The goal isn't to turn every HTML element into a component. The goal is to create components that are useful in multiple places.
+
+Simple Exercise
+
+Create these reusable components:
+
+Button
+Card
+Input
+
+Then use them to build a small profile page.
