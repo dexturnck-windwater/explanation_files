@@ -1,0 +1,453 @@
+25. React Router
+
+React Router is a library used to create navigation between different pages or views in a React application.
+
+Normally, a React application can have many components, but everything may appear on the same URL. React Router allows us to create different URLs for different parts of the application.
+
+For example:
+
+/home
+/products
+/about
+/contact
+
+Each URL can display a different React component.
+
+First, React Router needs to be installed:
+
+npm install react-router-dom
+
+A simple setup looks like:
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+Here:
+
+BrowserRouter enables React Router.
+Routes contains the routes.
+Route defines a URL and the component that should appear there.
+path is the URL.
+element is the component displayed for that URL.
+
+For example:
+
+/          → Home
+/products  → Products
+/about     → About
+26. Multiple Pages
+
+A React application can have different components that act like different pages.
+
+For example, we can create:
+
+src/
+├── App.jsx
+├── Home.jsx
+├── Products.jsx
+├── About.jsx
+└── Contact.jsx
+
+Home.jsx:
+
+function Home() {
+  return <h1>Home Page</h1>;
+}
+
+export default Home;
+
+Products.jsx:
+
+function Products() {
+  return <h1>Products Page</h1>;
+}
+
+export default Products;
+
+Then they can be connected using React Router:
+
+import Home from "./Home";
+import Products from "./Products";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+Now the application has two different pages:
+
+http://localhost:5173/
+http://localhost:5173/products
+
+The important idea is that these are still part of the same React application. React Router changes what component is displayed depending on the URL.
+
+27. Route Parameters
+
+Sometimes we don't want every product to have its own manually written route.
+
+For example, we might have:
+
+/products/1
+/products/2
+/products/3
+
+Instead of creating a separate route for every product, we can use a route parameter.
+
+<Route path="/products/:id" element={<ProductDetail />} />
+
+:id is a parameter.
+
+For example:
+
+/products/1
+
+means:
+
+id = 1
+
+And:
+
+/products/25
+
+means:
+
+id = 25
+
+Inside the component, we can get the parameter using useParams():
+
+import { useParams } from "react-router-dom";
+
+function ProductDetail() {
+  const { id } = useParams();
+
+  return <h1>Product ID: {id}</h1>;
+}
+
+If the user visits:
+
+/products/5
+
+the page can display:
+
+Product ID: 5
+
+This becomes especially useful when working with APIs.
+
+For example, we could use the ID to request:
+
+GET /products/5
+
+and display the details of product 5.
+
+28. Navigation
+
+We need a way for users to move between pages.
+
+React Router provides the Link component for this.
+
+import { Link } from "react-router-dom";
+
+function Navbar() {
+  return (
+    <nav>
+      <Link to="/">Home</Link>
+      <Link to="/products">Products</Link>
+      <Link to="/about">About</Link>
+    </nav>
+  );
+}
+
+The user can click the links to move between pages.
+
+We generally use:
+
+<Link to="/products">
+  Products
+</Link>
+
+instead of using a normal HTML link:
+
+<a href="/products">Products</a>
+
+because Link is designed to work with React Router.
+
+We can also navigate using JavaScript with useNavigate().
+
+import { useNavigate } from "react-router-dom";
+
+function Product() {
+  const navigate = useNavigate();
+
+  function goHome() {
+    navigate("/");
+  }
+
+  return <button onClick={goHome}>Go Home</button>;
+}
+
+This can be useful when navigation should happen after an action.
+
+For example:
+
+User submits form
+       ↓
+Product is created
+       ↓
+Navigate to Products page
+29. Layouts
+
+A layout is a part of the application that stays the same while the page content changes.
+
+For example, a website might always have:
+
+--------------------------------
+        My Website
+--------------------------------
+Home | Products | About
+--------------------------------
+
+        Page Content
+
+--------------------------------
+          Footer
+--------------------------------
+
+The navigation bar and footer do not need to be recreated for every page.
+
+React Router supports layouts using nested routes and Outlet.
+
+For example:
+
+import { Outlet } from "react-router-dom";
+
+function Layout() {
+  return (
+    <>
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/products">Products</Link>
+        <Link to="/about">About</Link>
+      </nav>
+
+      <main>
+        <Outlet />
+      </main>
+    </>
+  );
+}
+
+Then the routes can be structured like:
+
+<Routes>
+  <Route path="/" element={<Layout />}>
+    <Route index element={<Home />} />
+    <Route path="products" element={<Products />} />
+    <Route path="about" element={<About />} />
+  </Route>
+</Routes>
+
+Outlet is the place where the current page will appear.
+
+For example:
+
+Layout
+│
+├── Navbar
+│
+├── Outlet
+│     ├── Home
+│     ├── Products
+│     └── About
+│
+└── Footer
+
+This is useful for larger React projects because common UI can be shared between pages.
+
+30. Multi-Page Project
+
+After learning React Router, the student can combine everything into one small project.
+
+A good beginner project could be a Game Library.
+
+The application could have:
+
+Home
+Games
+About
+
+The routes could be:
+
+/
+ /games
+ /games/:id
+ /about
+
+The home page could display:
+
+Welcome to My Game Library
+
+[View Games]
+
+The Games page could display:
+
+Games
+
+Minecraft       [View]
+Terraria        [View]
+Stardew Valley  [View]
+
+When the user clicks View:
+
+/games/1
+
+The game detail page could display:
+
+Minecraft
+
+Genre: Sandbox
+Developer: Mojang
+
+[Back to Games]
+
+The project could use an API as well if the student has already learned fetch.
+
+The overall structure could be:
+
+App
+│
+└── BrowserRouter
+      │
+      └── Layout
+            │
+            ├── Navbar
+            │
+            ├── Home
+            │
+            ├── Games
+            │
+            ├── GameDetail
+            │     └── useParams()
+            │
+            └── About
+
+The student would practice:
+
+Creating multiple React components
+Creating routes
+Moving between pages
+Using Link
+Using route parameters
+Using useParams()
+Creating a shared layout
+Using Outlet
+Connecting pages to API data
+Navigating after an action with useNavigate()
+Simple Exercises
+
+Exercise 1 — Three Pages
+
+Create:
+
+Home
+About
+Contact
+
+and give each page its own route.
+
+Exercise 2 — Navigation Bar
+
+Create a navigation bar with links:
+
+Home | About | Contact
+
+Clicking each link should display the correct page.
+
+Exercise 3 — Product Detail
+
+Create a route:
+
+/products/:id
+
+Use useParams() to display the product ID.
+
+For example:
+
+/products/10
+
+should display:
+
+Product ID: 10
+
+Exercise 4 — Product List
+
+Create a list of products:
+
+const products = [
+  { id: 1, name: "Keyboard" },
+  { id: 2, name: "Mouse" },
+  { id: 3, name: "Monitor" }
+];
+
+Display each product with a link to:
+
+/products/1
+/products/2
+/products/3
+
+Exercise 5 — Layout
+
+Create a layout containing:
+
+Navbar
+Outlet
+Footer
+
+Make sure the Navbar and Footer remain visible when changing pages.
+
+Exercise 6 — Navigate After Action
+
+Create a button that performs an action and then uses useNavigate() to move to another page.
+
+For example:
+
+[Finish]
+
+clicking the button should navigate to:
+
+/success
+
+Exercise 7 — Multi-Page Project
+
+Create a small Game Library or Movie Library with:
+
+/
+ /games
+ /games/:id
+ /about
+
+The project should have:
+
+A shared Navbar
+Home page
+List page
+Detail page
+About page
+Links between pages
+Route parameters for individual items
