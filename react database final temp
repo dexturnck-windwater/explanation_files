@@ -1,0 +1,616 @@
+React + Database / Final Project
+37. React + Prisma / Backend
+
+At this stage, React can be connected to a real database through a backend.
+
+Previously, the basic API flow was:
+
+React
+  ↓
+fetch()
+  ↓
+API
+  ↓
+Data
+
+Now the application can use a backend and database:
+
+React
+  ↓
+fetch()
+  ↓
+Backend / API
+  ↓
+Prisma
+  ↓
+MySQL Database
+
+React normally should not connect directly to MySQL. Instead, React sends requests to the backend, and the backend communicates with the database.
+
+For example, React can request:
+
+GET /api/products
+
+The backend receives the request and uses Prisma to retrieve the products.
+
+A Prisma query might look like:
+
+const products = await prisma.product.findMany();
+
+The backend can then send the products back to React.
+
+React can receive them with:
+
+async function getProducts() {
+  const response = await fetch("/api/products");
+  const data = await response.json();
+
+  return data;
+}
+
+This is also a good opportunity to review async and await.
+
+API and database operations take time, so JavaScript needs to handle them asynchronously.
+
+For example:
+
+async function getProducts() {
+  const response = await fetch("/api/products");
+  const data = await response.json();
+
+  console.log(data);
+}
+
+The overall idea is:
+
+React
+→ requests data
+
+Backend
+→ receives request
+
+Prisma
+→ communicates with database
+
+MySQL
+→ stores the data
+38. Database CRUD
+
+CRUD represents the four main operations performed on data:
+
+C → Create
+R → Read
+U → Update
+D → Delete
+
+These operations were already introduced with APIs. Now they can be performed on a real MySQL database through Prisma.
+
+Create
+
+Create a new record:
+
+await prisma.product.create({
+  data: {
+    name: "Keyboard",
+    price: 50
+  }
+});
+
+This creates a new product in the database.
+
+Read
+
+Get data:
+
+const products = await prisma.product.findMany();
+
+The backend can return the products to React.
+
+Update
+
+Change an existing record:
+
+await prisma.product.update({
+  where: {
+    id: 1
+  },
+  data: {
+    price: 60
+  }
+});
+
+This changes the price of product 1.
+
+Delete
+
+Remove a record:
+
+await prisma.product.delete({
+  where: {
+    id: 1
+  }
+});
+
+This removes product 1 from the database.
+
+The complete CRUD relationship is:
+
+CREATE → Add new data
+READ   → Get data
+UPDATE → Change existing data
+DELETE → Remove data
+
+The complete application flow can now look like:
+
+React Form
+    ↓
+POST request
+    ↓
+Backend
+    ↓
+Prisma
+    ↓
+MySQL
+
+And when retrieving data:
+
+MySQL
+    ↓
+Prisma
+    ↓
+Backend
+    ↓
+JSON
+    ↓
+fetch()
+    ↓
+React
+    ↓
+Screen
+
+One important difference between using a normal JavaScript array and a database is that database data is persistent.
+
+For example:
+
+const products = [];
+
+Data stored only in this array can disappear when the application stops.
+
+A database stores the data separately:
+
+Application closes
+        ↓
+Application opens again
+        ↓
+Database still contains the data
+39. Final Project
+
+The final project should combine the main concepts covered throughout the React course.
+
+A project should be large enough to demonstrate the different skills, but still small enough to finish properly.
+
+Some suitable ideas are:
+
+Game Library
+
+Possible pages:
+
+Home
+Games
+Game Details
+Add Game
+Edit Game
+Favorites
+
+Possible database structure:
+
+Game
+- id
+- name
+- genre
+- description
+- releaseYear
+Movie Database
+
+Possible pages:
+
+Home
+Movies
+Movie Details
+Add Movie
+Edit Movie
+
+Possible database structure:
+
+Movie
+- id
+- title
+- genre
+- year
+- description
+Small E-Commerce Store
+
+Possible pages:
+
+Home
+Products
+Product Details
+Cart
+Add Product
+Edit Product
+
+Possible database structure:
+
+Product
+- id
+- name
+- price
+- category
+- stock
+Course Management
+
+Possible pages:
+
+Home
+Students
+Courses
+Student Details
+Add
+Edit
+Delete
+
+This can also introduce relationships between database tables.
+
+For example:
+
+Student
+   ↓
+Course
+
+The final project can contain concepts such as:
+
+React components
+Props
+State
+useEffect
+Forms
+Validation
+Search and filtering
+React Router
+Loading states
+Error states
+API requests
+CRUD
+Backend
+Prisma
+MySQL
+Custom hooks
+Context
+Reusable components
+Organized folders
+
+Not every feature has to be forced into the project. Features should be included when they make sense for the application.
+
+The goal is to combine the concepts naturally.
+
+40. Final Project Polish / Presentation
+
+The final stage should focus on improving the project rather than adding many new features.
+
+UI Polish
+
+Check the overall interface.
+
+For example:
+
+Are buttons easy to understand?
+
+Are forms organized?
+
+Are titles clear?
+
+Is spacing consistent?
+
+Can important actions be easily found?
+
+Instead of:
+
+[Button]
+
+use something clearer:
+
+[Add Game]
+
+The interface should make it obvious what each action does.
+
+Loading and Error Handling
+
+The application should handle situations where data takes time to load or something goes wrong.
+
+For example:
+
+Loading...
+
+or:
+
+Failed to load games.
+
+If there is no data:
+
+No games found.
+
+After an action:
+
+Game successfully added.
+
+or:
+
+Game successfully deleted.
+
+This makes the application feel more complete.
+
+Form Validation
+
+Forms should check whether the information entered is valid.
+
+For example:
+
+Game Name:
+[                  ]
+
+Genre:
+[                  ]
+
+[Add Game]
+
+If the name is empty:
+
+Game name is required.
+
+Validation should clearly explain what needs to be corrected.
+
+Responsive Design
+
+The application should also be checked at different screen sizes:
+
+Desktop
+   ↓
+Tablet
+   ↓
+Mobile
+
+It does not need to look like a professional commercial website. The main goal is that the interface remains usable on different screen sizes.
+
+Code Organization
+
+Before finishing, check whether the project is easy to understand.
+
+A possible structure is:
+
+src/
+├── components/
+│   ├── Navbar.jsx
+│   ├── GameCard.jsx
+│   └── Button.jsx
+│
+├── pages/
+│   ├── Home.jsx
+│   ├── Games.jsx
+│   └── GameDetail.jsx
+│
+├── hooks/
+│   └── useFetch.jsx
+│
+├── context/
+│   └── FavoritesContext.jsx
+│
+├── services/
+│   └── gameApi.js
+│
+├── App.jsx
+└── main.jsx
+
+Look for:
+
+Very large components
+Repeated code
+Unused imports
+Confusing variable names
+API code repeated in many places
+Components that could be reused
+
+The goal is to make the project easier to read and maintain.
+
+Final Presentation
+
+The final presentation can be around 5–10 minutes.
+
+Start by explaining what the project is.
+
+For example:
+
+"My project is a Game Library."
+
+Then explain what the application can do:
+
+Users can view games,
+search for games,
+add games,
+edit games,
+and delete games.
+
+Next, explain the basic technical structure:
+
+React
+ ↓
+Backend API
+ ↓
+Prisma
+ ↓
+MySQL
+
+Then demonstrate the application:
+
+Open application
+      ↓
+View data
+      ↓
+Add item
+      ↓
+Edit item
+      ↓
+Delete item
+
+Finally, explain a few important technical features.
+
+For example:
+
+"I used React Router for multiple pages."
+
+"I used fetch to communicate with the backend."
+
+"I used Prisma to communicate with MySQL."
+
+"I used React state to control the UI."
+
+There is no need to explain every line of code. The important part is being able to explain how the different parts of the project work together.
+
+Simple Exercises
+Exercise 1 — Connect React to Backend
+
+Create one backend endpoint that returns database data.
+
+Use fetch() in React and display the returned data.
+
+Exercise 2 — Create
+
+Create a React form that sends information to the backend.
+
+The backend should use Prisma to save the information into MySQL.
+
+Exercise 3 — Read
+
+Get records from MySQL through Prisma and the backend.
+
+Display the results in React using .map().
+
+Exercise 4 — Update
+
+Create an Edit button.
+
+Allow information to be changed and send the updated information to the backend.
+
+Use Prisma to update the database record.
+
+Exercise 5 — Delete
+
+Create a Delete button.
+
+When clicked:
+
+React
+ ↓
+DELETE request
+ ↓
+Backend
+ ↓
+Prisma
+ ↓
+Database
+
+The selected record should be removed.
+
+Exercise 6 — Loading and Errors
+
+Add a loading state while waiting for an API request.
+
+Display an error message if the request fails.
+
+Also display an empty message if there are no records.
+
+Exercise 7 — Final Project
+
+Create a complete small application using:
+
+React
+React Router
+Forms
+API
+Backend
+Prisma
+MySQL
+CRUD
+
+The application should allow data to be created, displayed, edited, and deleted.
+
+Exercise 8 — Polish
+
+Improve:
+
+UI
+Validation
+Loading messages
+Error messages
+Responsive design
+Code organization
+
+Remove unnecessary or repeated code.
+
+Exercise 9 — Presentation
+
+Prepare a short presentation explaining:
+
+What the project does
+
+What pages it has
+
+How CRUD works
+
+How React communicates with the backend
+
+How Prisma communicates with the database
+
+How the data is stored
+
+What features were implemented
+Final Course Progression
+
+The whole React course can now progress from basic React to a complete full-stack application:
+
+React Basics
+      ↓
+JSX
+      ↓
+useState / useEffect
+      ↓
+Components & Props
+      ↓
+Forms & UI
+      ↓
+fetch / API
+      ↓
+CRUD
+      ↓
+React Router
+      ↓
+Custom Hooks
+      ↓
+Context
+      ↓
+Reusable Components
+      ↓
+Project Organization
+      ↓
+Backend
+      ↓
+Prisma
+      ↓
+MySQL
+      ↓
+Database CRUD
+      ↓
+Final Project
+      ↓
+Polish & Presentation
+
+The final goal is to be able to take an application idea and break it into pages, components, state, API requests, backend operations, and database data, then organize all of those parts into one working project.
