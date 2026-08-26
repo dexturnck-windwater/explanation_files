@@ -1,0 +1,570 @@
+Advanced Organization
+31. Custom Hooks
+
+A custom hook is a JavaScript function that contains reusable React logic.
+
+Students have already used built-in hooks such as:
+
+useState()
+useEffect()
+
+Sometimes the same logic is needed in multiple components. Instead of copying the code, we can create our own hook.
+
+For example, suppose several components need to fetch data.
+
+Instead of repeating:
+
+const [data, setData] = useState([]);
+const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+  async function getData() {
+    const response = await fetch(url);
+    const result = await response.json();
+
+    setData(result);
+    setLoading(false);
+  }
+
+  getData();
+}, []);
+
+we could create:
+
+function useFetch(url) {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function getData() {
+      const response = await fetch(url);
+      const result = await response.json();
+
+      setData(result);
+      setLoading(false);
+    }
+
+    getData();
+  }, [url]);
+
+  return { data, loading };
+}
+
+Then a component can use it:
+
+function Products() {
+  const { data, loading } = useFetch("/products");
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  return (
+    <div>
+      {data.map(product => (
+        <p key={product.id}>{product.name}</p>
+      ))}
+    </div>
+  );
+}
+
+The important idea is:
+
+Normal function
+    ↓
+Reusable calculation/logic
+
+Custom hook
+    ↓
+Reusable React logic
+
+Custom hooks usually start with use.
+
+Examples:
+
+useFetch()
+useForm()
+useWindowSize()
+useLocalStorage()
+
+The student does not need to make complicated hooks at first. The main purpose is to avoid repeating the same React logic.
+
+32. Context
+
+Context allows data to be shared between many components without manually passing props through every component.
+
+For example:
+
+App
+│
+├── Navbar
+│
+└── Main
+    │
+    └── Product
+
+Suppose App has a username:
+
+const [username, setUsername] = useState("Denny");
+
+Normally, if Product needs the username, we might pass it through props:
+
+App
+ ↓ props
+Main
+ ↓ props
+Product
+
+This can become annoying when there are many levels.
+
+Context allows us to make the data available to components that need it.
+
+For example:
+
+import { createContext } from "react";
+
+const UserContext = createContext();
+
+Then we provide the data:
+
+<UserContext.Provider value={username}>
+  <App />
+</UserContext.Provider>
+
+A component can then access it with useContext():
+
+const username = useContext(UserContext);
+
+The basic idea is:
+
+Without Context:
+
+App
+ ↓
+Page
+ ↓
+Section
+ ↓
+Component
+
+
+With Context:
+
+        Context
+       ↙   ↓   ↘
+    Page Section Component
+
+Context is useful for information that many parts of the application need.
+
+Examples include:
+
+Logged-in user
+Theme
+Language
+Shopping cart
+Application settings
+
+It should not automatically be used for every piece of state. Normal props are still useful when data only needs to move between nearby components.
+
+33. Reusable Components
+
+A reusable component is a component designed so that it can be used in multiple places.
+
+For example, instead of creating three different buttons:
+
+<button>Add</button>
+<button>Delete</button>
+<button>Edit</button>
+
+we could create a reusable component:
+
+function Button({ children }) {
+  return <button>{children}</button>;
+}
+
+Then:
+
+<Button>Add</Button>
+<Button>Edit</Button>
+<Button>Delete</Button>
+
+The component can also receive props:
+
+function Button({ children, onClick }) {
+  return (
+    <button onClick={onClick}>
+      {children}
+    </button>
+  );
+}
+
+Now different parts of the application can use the same component with different behavior.
+
+Another example is a reusable Card:
+
+function Card({ title, description }) {
+  return (
+    <div>
+      <h2>{title}</h2>
+      <p>{description}</p>
+    </div>
+  );
+}
+
+Then:
+
+<Card
+  title="Minecraft"
+  description="A sandbox game"
+/>
+
+<Card
+  title="Terraria"
+  description="An adventure game"
+/>
+
+The important question when creating a component is:
+
+"Could I use this component somewhere else?"
+
+If yes, it may be a good candidate for a reusable component.
+
+34. Project / Folder Organization
+
+As a React project becomes larger, putting everything into one folder or one file becomes difficult to manage.
+
+A small project might start like:
+
+src/
+├── App.jsx
+├── Home.jsx
+├── Products.jsx
+└── About.jsx
+
+A larger project can be organized into folders:
+
+src/
+├── components/
+│   ├── Button.jsx
+│   ├── Card.jsx
+│   └── Navbar.jsx
+│
+├── pages/
+│   ├── Home.jsx
+│   ├── Products.jsx
+│   └── ProductDetail.jsx
+│
+├── hooks/
+│   └── useFetch.jsx
+│
+├── context/
+│   └── UserContext.jsx
+│
+├── services/
+│   └── productApi.js
+│
+├── App.jsx
+└── main.jsx
+
+Each folder has a general purpose.
+
+components
+
+Reusable visual components.
+
+Button
+Card
+Navbar
+Modal
+pages
+
+Components that represent whole pages.
+
+Home
+Products
+ProductDetail
+About
+hooks
+
+Custom hooks.
+
+useFetch
+useForm
+context
+
+Context-related code.
+
+UserContext
+CartContext
+services
+
+Code that communicates with APIs or handles data-related operations.
+
+For example:
+
+export async function getProducts() {
+  const response = await fetch("/products");
+  return response.json();
+}
+
+This organization makes it easier to find code later.
+
+35. Separating UI and Data Logic
+
+This is an important idea when projects become larger.
+
+UI logic is concerned with what the user sees.
+
+For example:
+
+function ProductCard({ product }) {
+  return (
+    <div>
+      <h2>{product.name}</h2>
+      <p>${product.price}</p>
+    </div>
+  );
+}
+
+This component mainly cares about displaying the product.
+
+Data logic is concerned with getting or changing data.
+
+For example:
+
+async function getProducts() {
+  const response = await fetch("/products");
+  return response.json();
+}
+
+Instead of putting everything into one huge component:
+
+ProductPage.jsx
+    ↓
+fetch
+    ↓
+state
+    ↓
+validation
+    ↓
+form
+    ↓
+UI
+    ↓
+buttons
+    ↓
+API
+
+we can separate the responsibilities.
+
+For example:
+
+ProductPage
+    ↓
+uses data
+    ↓
+productApi.js
+    ↓
+fetches data
+
+And:
+
+ProductPage
+    ↓
+renders
+    ↓
+ProductCard
+
+A possible structure:
+
+pages/
+    Products.jsx
+
+components/
+    ProductCard.jsx
+
+services/
+    productApi.js
+
+productApi.js:
+
+export async function getProducts() {
+  const response = await fetch("/products");
+  return response.json();
+}
+
+ProductCard.jsx:
+
+function ProductCard({ product }) {
+  return (
+    <div>
+      <h2>{product.name}</h2>
+      <p>{product.price}</p>
+    </div>
+  );
+}
+
+Products.jsx can then combine them.
+
+The goal is not to completely separate every single line of code. The goal is to make each part have a clear responsibility.
+
+36. Larger Project
+
+At this point, the student can combine the previous months into a larger React project.
+
+For example, a Game Library could now become a more complete application.
+
+Possible pages:
+
+/
+ /games
+ /games/:id
+ /favorites
+ /profile
+
+Possible components:
+
+Navbar
+GameCard
+Button
+SearchBar
+Modal
+
+Possible hooks:
+
+useFetch
+
+Possible Context:
+
+FavoritesContext
+
+Possible API functions:
+
+getGames()
+getGame(id)
+addFavorite(id)
+removeFavorite(id)
+
+A possible project structure:
+
+src/
+│
+├── components/
+│   ├── Navbar.jsx
+│   ├── GameCard.jsx
+│   ├── Button.jsx
+│   └── SearchBar.jsx
+│
+├── pages/
+│   ├── Home.jsx
+│   ├── Games.jsx
+│   ├── GameDetail.jsx
+│   └── Favorites.jsx
+│
+├── hooks/
+│   └── useFetch.jsx
+│
+├── context/
+│   └── FavoritesContext.jsx
+│
+├── services/
+│   └── gameApi.js
+│
+├── App.jsx
+└── main.jsx
+
+The student is now combining concepts learned throughout the year:
+
+Components
+     ↓
+Props
+     ↓
+State
+     ↓
+Context
+     ↓
+Custom Hooks
+     ↓
+React Router
+     ↓
+API / fetch
+     ↓
+CRUD
+     ↓
+Project Organization
+
+The important goal of this month is not to introduce lots of new React features. It is to teach the student how to take the things they already know and organize them properly when the application becomes bigger.
+
+Simple Exercises
+
+Exercise 1 — Custom Hook
+
+Create a simple useCounter() custom hook that provides:
+
+count
+increase()
+decrease()
+
+Use it in two different components.
+
+Exercise 2 — Context
+
+Create a ThemeContext with:
+
+light
+dark
+
+Create a button that changes the theme.
+
+Have another component read the theme using useContext().
+
+Exercise 3 — Reusable Card
+
+Create a reusable:
+
+GameCard
+
+component that receives:
+
+name
+genre
+image
+
+as props.
+
+Use it for at least three games.
+
+Exercise 4 — Folder Organization
+
+Take an existing React project and organize it into:
+
+components/
+pages/
+hooks/
+services/
+
+Move the appropriate files into each folder.
+
+Exercise 5 — Separate API Logic
+
+Move the fetch() code out of a page component and put it into:
+
+services/gameApi.js
+
+Then import and use the function from the page.
+
+Exercise 6 — Larger Project
+
+Create a small Game Library containing:
+
+Multiple pages with React Router
+Game list
+Game detail page
+Search
+Add/remove favorites
+Reusable GameCard
+Shared Navbar
+Context for favorites
+Custom useFetch hook
+API functions in a separate service file
+Organized folders
