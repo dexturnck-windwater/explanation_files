@@ -1,0 +1,152 @@
+# University Application Form — React Exercise
+
+Create a University Application Form using React.
+
+The form should contain:
+
+* Full Name
+* Photo
+* Phone Number
+* Email
+* Date of Birth
+* Gender
+* Course
+* Previous Education
+* Address
+* Emergency Contact Name
+* Emergency Contact Phone
+* Reason for Choosing This Course
+* Agree to Terms
+* Submit button
+
+## Requirements
+
+### 1. Controlled Inputs
+
+Every text-based input should be controlled using React state.
+
+For example:
+
+const [name, setName] = useState("");
+
+The input should use:
+
+value={name}
+
+and:
+
+onChange={(e) => setName(e.target.value)}
+
+### 2. Course Selection
+
+Create a dropdown containing several courses.
+
+For example:
+
+* Computer Science
+* Information Technology
+* Business
+* Engineering
+* Design
+
+Store the selected course in state.
+
+### 3. Gender
+
+Use radio buttons for:
+
+* Male
+* Female
+* Other
+
+Only one option should be selectable.
+
+### 4. Validation
+
+When the user presses Submit:
+
+* Full Name cannot be empty.
+* Phone Number cannot be empty.
+* Email cannot be empty.
+* Course must be selected.
+* Terms must be accepted.
+
+If something is missing, display an error message.
+
+For example:
+
+Name is required.
+
+Do not submit the application when there is an error.
+
+### 5. Submit
+
+Use:
+
+<form onSubmit={handleSubmit}>
+
+Inside `handleSubmit`, use:
+
+e.preventDefault();
+
+If everything is valid, display:
+
+Application submitted successfully!
+
+Also use `console.log()` to display the application information.
+
+### 6. Display the Application
+
+After a successful submission, display the entered information underneath the form.
+
+For example:
+
+Application Submitted
+
+Name: Alex Tan
+Phone: 08123456789
+Email: [alex@example.com](mailto:alex@example.com)
+Course: Computer Science
+Gender: Male
+
+### 7. Photo
+
+Add a photo input using:
+
+<input type="file" />
+
+For this exercise, the student does **not** need to upload the photo to a database or server.
+
+Simply practice handling the file input.
+
+### 8. Reset
+
+After a successful submission, add a Reset button that clears the form.
+
+## Extra Challenge
+
+Add an application status:
+
+Pending
+
+After the user submits the form successfully, change it to:
+
+Submitted
+
+The student should use React state to control this status.
+
+## Main Things Being Practiced
+
+Controlled inputs
+Forms
+onSubmit
+preventDefault()
+Validation
+Error messages
+Select inputs
+Radio buttons
+Checkboxes
+File inputs
+Conditional rendering
+React state
+Displaying submitted data
