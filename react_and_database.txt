@@ -1,0 +1,403 @@
+
+37. React + Prisma / Backend
+
+A React application normally handles the user interface.
+
+For example, React can display a list of cars, products, users, or posts.
+
+However, React itself is not normally responsible for permanently storing the data.
+
+A database is used when the application needs to save data permanently.
+
+For example, a car shop might store information such as:
+
+* Car name
+* Brand
+* Price
+* Year
+* Description
+
+React can display this information, while a backend can communicate with the database.
+
+A common structure is:
+
+React → Backend → Database
+
+React sends a request to the backend.
+
+The backend processes the request and communicates with the database.
+
+The database stores or retrieves the data.
+
+The backend then sends the result back to React.
+
+Prisma is a tool that makes it easier for a backend application to work with a database.
+
+Prisma can define the structure of the database using a schema.
+
+For example, a simple Prisma model might represent a Product:
+
+model Product {
+id    Int    @id @default(autoincrement())
+name  String
+price Float
+}
+
+This model describes the data that a Product should contain.
+
+The id can be automatically generated.
+
+The name stores the product name.
+
+The price stores the product price.
+
+React does not need to know how the database works internally.
+
+Instead, React communicates with the backend through API requests.
+
+For example:
+
+React
+↓
+GET /products
+↓
+Backend
+↓
+Prisma
+↓
+Database
+
+The database sends the data back through the same chain.
+
+React can then display the returned data on the page.
+
+38. Database CRUD
+
+CRUD stands for four basic database operations:
+
+Create
+
+Read
+
+Update
+
+Delete
+
+These operations are used in many real applications.
+
+For example, consider a product management application.
+
+Create means adding a new product.
+
+For example:
+
+A user enters:
+
+Name: Keyboard
+Price: 30
+
+The application sends this information to the backend.
+
+The backend creates a new record in the database.
+
+Read means getting data from the database.
+
+For example:
+
+The application requests all products.
+
+The backend gets the products from the database and sends them to React.
+
+React can then display:
+
+Keyboard — $30
+Mouse — $20
+Monitor — $150
+
+Update means changing existing data.
+
+For example:
+
+Keyboard — $30
+
+can be changed to:
+
+Keyboard — $35
+
+React sends the updated information to the backend.
+
+The backend updates the database.
+
+Delete means removing data.
+
+For example, the user presses a Delete button for a product.
+
+React sends a request to the backend.
+
+The backend removes the product from the database.
+
+A simple CRUD application might have:
+
+* A list of products
+* An Add Product form
+* An Edit button
+* A Delete button
+* A Search box
+
+This combines many React concepts learned throughout the year.
+
+For example:
+
+useState can store form information.
+
+useEffect can load data.
+
+Props can pass information between components.
+
+Callback props can allow child components to communicate with parents.
+
+Forms can collect user input.
+
+Conditional rendering can show different UI depending on the application state.
+
+Lists can display database records.
+
+The backend and Prisma are responsible for communicating with the database.
+
+39. Final Project
+
+The final project is an opportunity to combine the React concepts learned throughout the course.
+
+The project should be larger than the small exercises used in previous lessons.
+
+The student should first decide what kind of application they want to create.
+
+Possible projects include:
+
+* Car shop
+* Game collection
+* Music library
+* Movie database
+* Book management system
+* Restaurant menu
+* Product management system
+* School club management system
+* Simple task management application
+
+The project should have data stored in a database.
+
+For example, a movie application might store:
+
+Movie name
+
+Genre
+
+Release year
+
+Description
+
+Rating
+
+The React application can display the movies.
+
+The user can add a new movie.
+
+The user can edit a movie.
+
+The user can delete a movie.
+
+The user can search for movies.
+
+The project should be divided into several components.
+
+For example:
+
+App
+
+MovieList
+
+MovieCard
+
+MovieForm
+
+SearchBar
+
+The exact components depend on the project.
+
+The student should also think about how data moves through the application.
+
+For example:
+
+Database
+↓
+Backend
+↓
+React
+↓
+MovieList
+↓
+MovieCard
+
+When the user adds a movie:
+
+MovieForm
+↓
+React
+↓
+Backend
+↓
+Prisma
+↓
+Database
+
+The final project should focus on making all of these parts work together.
+
+The student should build the project step by step rather than trying to create everything at once.
+
+A possible development order is:
+
+1. Plan the project
+
+2. Design the database
+
+3. Create the backend
+
+4. Connect Prisma to the database
+
+5. Create the React application
+
+6. Display database data
+
+7. Add Create functionality
+
+8. Add Update functionality
+
+9. Add Delete functionality
+
+10. Add search or filtering
+
+11. Improve the user interface
+
+12. Test the application
+
+13. Final Project Polish / Presentation
+
+After the main functionality is finished, the project should be polished.
+
+Polishing means improving the project after the important features already work.
+
+The student should check the user interface.
+
+For example:
+
+Are the buttons easy to understand?
+
+Are the forms easy to use?
+
+Is the information displayed clearly?
+
+Are there unnecessary elements on the page?
+
+The student should also check for errors.
+
+For example:
+
+What happens when a form is submitted without information?
+
+What happens when the database cannot be reached?
+
+What happens when there are no products?
+
+What happens when a user tries to delete an item?
+
+The application should handle these situations reasonably.
+
+The student should also make sure that Create, Read, Update, and Delete all work correctly.
+
+Testing is an important part of the final project.
+
+The student should test the application as if they were a normal user.
+
+For example:
+
+Add a new item.
+
+Check whether it appears in the list.
+
+Edit the item.
+
+Check whether the changes are saved.
+
+Delete the item.
+
+Check whether it disappears.
+
+Search for different items.
+
+Check whether the search works correctly.
+
+After testing, the student can prepare the project presentation.
+
+The presentation should explain:
+
+1. What the project is
+
+2. Why the project was created
+
+3. What the main features are
+
+4. How React is used
+
+5. How the backend is used
+
+6. How Prisma is used
+
+7. How the database is structured
+
+8. How CRUD works in the project
+
+9. What problems were encountered
+
+10. How those problems were solved
+
+The student can demonstrate the application during the presentation.
+
+For example:
+
+First show the home page.
+
+Then demonstrate reading data from the database.
+
+Add a new item.
+
+Edit an existing item.
+
+Delete an item.
+
+Demonstrate search or filtering if the project has it.
+
+Finally, explain what could be improved in the future.
+
+The final project is not only about making an application that works.
+
+It is also about understanding how the different parts of a modern web application work together.
+
+The overall structure can be thought of as:
+
+React
+↓
+User Interface
+
+Backend
+↓
+Application Logic
+
+Prisma
+↓
+Database Communication
+
+Database
+↓
+Permanent Data
+
+By completing the final project, the student reviews and applies the React concepts learned throughout the year while also learning how React can work together with a backend and database.
